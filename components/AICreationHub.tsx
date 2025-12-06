@@ -72,103 +72,134 @@ export const AICreationHub: React.FC<AICreationHubProps> = ({ setView, setIsImme
     }
 
     return (
-        <div className="h-full w-full flex items-center justify-center p-6 animate-in fade-in duration-700">
+        <div className="h-full w-full flex flex-col items-center justify-center p-6 animate-in fade-in duration-700 overflow-hidden">
 
-            {/* Main Hero Container */}
-            <div
-                className="w-full max-w-3xl rounded-[40px] border border-[var(--border-color)] p-10 shadow-2xl relative overflow-hidden backdrop-blur-sm transition-colors duration-300"
-                style={{ background: 'linear-gradient(to bottom, var(--gradient-start), var(--gradient-end))' }}
-            >
+            {/* Header */}
+            <div className="text-center mb-8 max-w-2xl shrink-0">
+                <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-3 leading-tight">
+                    ¿En qué te puedo ayudar hoy?
+                </h1>
+                <p className="text-slate-400 text-lg font-light">
+                    Potencia tu estrategia con nuestra suite de IA: desde investigación profunda y creación de contenido hasta análisis avanzado de datos. Todo lo que necesitas para escalar, en un solo lugar.
+                </p>
+            </div>
 
-                {/* Structural Gradient - Low Intensity */}
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-black/5 to-transparent pointer-events-none"></div>
-                <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-gradient-to-bl from-[#B8F30B]/5 to-transparent blur-[80px] pointer-events-none"></div>
+            {/* Grid Container */}
+            <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 px-4">
 
-                {/* Content Wrapper */}
-                <div className="relative z-10 flex flex-col items-center">
+                {/* Card 1: Research (Orange) */}
+                <button
+                    onClick={() => setMode('RESEARCH_CONFIG')}
+                    className="group relative flex flex-col justify-between h-[320px] p-6 rounded-[24px] bg-[#0A0A0A] border border-white/10 overflow-hidden text-left transition-all duration-500 hover:scale-[1.02] hover:border-orange-500/30"
+                >
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-orange-500/5 to-orange-500/10 opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-orange-600/20 to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
 
-                    {/* Header Question */}
-                    <div className="text-center mb-10 max-w-xl">
-                        <h1 className="text-3xl md:text-4xl font-semibold text-[var(--text-primary)] tracking-tight mb-2 leading-tight transition-colors duration-300">
-                            ¿En qué te puedo ayudar hoy?
-                        </h1>
-                        <p className="text-[var(--text-secondary)] text-base font-light transition-colors duration-300">
-                            Tu copiloto creativo para escalar resultados.
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 rounded-xl bg-[#1A1A1A] border border-white/10 flex items-center justify-center mb-4 group-hover:border-orange-500/50 transition-colors duration-300">
+                        <Search size={20} className="text-orange-500" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10 mt-auto">
+                        <h3 className="text-xl font-bold text-white mb-2">Research</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                            Análisis de mercado y competidores para encontrar tu ventaja competitiva.
                         </p>
+                        <div className="flex items-center gap-2 text-white font-medium text-xs group-hover:gap-3 transition-all">
+                            <span>Iniciar Research</span>
+                            <ArrowRight size={14} />
+                        </div>
+                    </div>
+                </button>
+
+                {/* Card 2: Proceso Creativo (Blue) */}
+                <button
+                    onClick={() => handleStartCreative({
+                        product: '',
+                        countries: [],
+                        objective: '',
+                        links: ''
+                    })}
+                    className="group relative flex flex-col justify-between h-[320px] p-6 rounded-[24px] bg-[#0A0A0A] border border-white/10 overflow-hidden text-left transition-all duration-500 hover:scale-[1.02] hover:border-blue-500/30"
+                >
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-blue-500/10 opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-blue-600/20 to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 rounded-xl bg-[#1A1A1A] border border-white/10 flex items-center justify-center mb-4 group-hover:border-blue-500/50 transition-colors duration-300">
+                        <Layers size={20} className="text-blue-500" />
                     </div>
 
-                    {/* Vertical Options Container */}
-                    <div className="w-full grid gap-5">
-
-                        {/* Option 1: Research */}
-                        <button
-                            onClick={() => setMode('RESEARCH_CONFIG')}
-                            className="group w-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-[24px] p-5 text-left transition-all duration-300 hover:border-[#B8F30B]/50 hover:shadow-[0_0_25px_rgba(184,243,11,0.1)] hover:-translate-y-0.5 flex items-center gap-6"
-                        >
-                            <div className="w-12 h-12 rounded-2xl bg-[var(--bg-primary)] flex items-center justify-center group-hover:bg-[#B8F30B]/10 transition-colors duration-300 border border-[var(--border-color)] group-hover:border-[#B8F30B]/20">
-                                <Search size={22} className="text-[var(--text-secondary)] group-hover:text-[#B8F30B] transition-colors duration-300" />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--text-primary)] transition-colors">Research</h3>
-                                <p className="text-[var(--text-secondary)] text-sm font-light leading-relaxed group-hover:text-[var(--text-secondary)] transition-colors">
-                                    Análisis de mercado y competidores.
-                                </p>
-                            </div>
-                            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
-                                <ArrowRight size={20} className="text-[#B8F30B]" />
-                            </div>
-                        </button>
-
-                        {/* Option 2: Creative Process */}
-                        <button
-                            onClick={() => handleStartCreative({
-                                product: '',
-                                countries: [],
-                                objective: '',
-                                links: ''
-                            })}
-                            className="group w-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-[24px] p-5 text-left transition-all duration-300 hover:border-[#B8F30B]/50 hover:shadow-[0_0_25px_rgba(184,243,11,0.1)] hover:-translate-y-0.5 flex items-center gap-6"
-                        >
-                            <div className="w-12 h-12 rounded-2xl bg-[var(--bg-primary)] flex items-center justify-center group-hover:bg-[#B8F30B]/10 transition-colors duration-300 border border-[var(--border-color)] group-hover:border-[#B8F30B]/20">
-                                <Layers size={22} className="text-[var(--text-secondary)] group-hover:text-[#B8F30B] transition-colors duration-300" />
-                            </div>
-                            <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--text-primary)] transition-colors">Proceso creativo</h3>
-                                <p className="text-[var(--text-secondary)] text-sm font-light leading-relaxed group-hover:text-[var(--text-secondary)] transition-colors">
-                                    Ángulos, hooks y narrativa estratégica.
-                                </p>
-                            </div>
-                            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
-                                <ArrowRight size={20} className="text-[#B8F30B]" />
-                            </div>
-                        </button>
-
-                        {/* Option 3: Creative Strategist + Media Buyer */}
-                        <button
-                            onClick={() => setView(ViewState.AI_STUDIO)}
-                            className="group w-full bg-[var(--bg-tertiary)] border border-[var(--border-color)] rounded-[24px] p-5 text-left transition-all duration-300 hover:border-[#B8F30B]/50 hover:shadow-[0_0_25px_rgba(184,243,11,0.1)] hover:-translate-y-0.5 flex items-center gap-6 relative overflow-hidden"
-                        >
-                            <div className="w-12 h-12 rounded-2xl bg-[var(--bg-primary)] flex items-center justify-center group-hover:bg-[#B8F30B]/10 transition-colors duration-300 border border-[var(--border-color)] group-hover:border-[#B8F30B]/20">
-                                <Brain size={22} className="text-[var(--text-secondary)] group-hover:text-[#B8F30B] transition-colors duration-300" />
-                            </div>
-                            <div className="flex-1">
-                                <div className="flex items-center gap-3 mb-1">
-                                    <h3 className="text-lg font-semibold text-[var(--text-primary)] group-hover:text-[var(--text-primary)] transition-colors">Estratega + Media Buyer</h3>
-                                    <span className="bg-[#B8F30B]/10 text-[#B8F30B] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider border border-[#B8F30B]/20">
-                                        Recomendado
-                                    </span>
-                                </div>
-                                <p className="text-[var(--text-secondary)] text-sm font-light leading-relaxed group-hover:text-[var(--text-secondary)] transition-colors">
-                                    Estrategia integral y optimización de pauta.
-                                </p>
-                            </div>
-                            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0">
-                                <ArrowRight size={20} className="text-[#B8F30B]" />
-                            </div>
-                        </button>
-
+                    {/* Content */}
+                    <div className="relative z-10 mt-auto">
+                        <h3 className="text-xl font-bold text-white mb-2">Proceso Creativo</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                            Generación de ángulos, hooks y narrativa estratégica para tus anuncios.
+                        </p>
+                        <div className="flex items-center gap-2 text-white font-medium text-xs group-hover:gap-3 transition-all">
+                            <span>Crear Contenido</span>
+                            <ArrowRight size={14} />
+                        </div>
                     </div>
-                </div>
+                </button>
+
+                {/* Card 3: Estratega (Green) */}
+                <button
+                    onClick={() => setView(ViewState.AI_STUDIO)}
+                    className="group relative flex flex-col justify-between h-[320px] p-6 rounded-[24px] bg-[#0A0A0A] border border-white/10 overflow-hidden text-left transition-all duration-500 hover:scale-[1.02] hover:border-green-500/30"
+                >
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-green-500/10 opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-green-600/20 to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 rounded-xl bg-[#1A1A1A] border border-white/10 flex items-center justify-center mb-4 group-hover:border-green-500/50 transition-colors duration-300">
+                        <Brain size={20} className="text-green-500" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10 mt-auto">
+                        <h3 className="text-xl font-bold text-white mb-2">Estratega AI</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                            Consultoría estratégica y optimización de pauta publicitaria.
+                        </p>
+                        <div className="flex items-center gap-2 text-white font-medium text-xs group-hover:gap-3 transition-all">
+                            <span>Ver Estrategia</span>
+                            <ArrowRight size={14} />
+                        </div>
+                    </div>
+                </button>
+
+                {/* Card 4: Análisis IA (Purple) */}
+                <button
+                    onClick={() => setView(ViewState.CAMPAIGNS)}
+                    className="group relative flex flex-col justify-between h-[320px] p-6 rounded-[24px] bg-[#0A0A0A] border border-white/10 overflow-hidden text-left transition-all duration-500 hover:scale-[1.02] hover:border-purple-500/30"
+                >
+                    {/* Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 to-purple-500/10 opacity-20 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-purple-600/20 to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+
+                    {/* Icon */}
+                    <div className="relative z-10 w-12 h-12 rounded-xl bg-[#1A1A1A] border border-white/10 flex items-center justify-center mb-4 group-hover:border-purple-500/50 transition-colors duration-300">
+                        <Sparkles size={20} className="text-purple-500" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10 mt-auto">
+                        <h3 className="text-xl font-bold text-white mb-2">Análisis IA</h3>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                            Insights profundos y métricas clave para la toma de decisiones.
+                        </p>
+                        <div className="flex items-center gap-2 text-white font-medium text-xs group-hover:gap-3 transition-all">
+                            <span>Analizar Datos</span>
+                            <ArrowRight size={14} />
+                        </div>
+                    </div>
+                </button>
+
             </div>
         </div>
     );

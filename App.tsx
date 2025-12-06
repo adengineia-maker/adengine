@@ -5,6 +5,7 @@ import { MySpace } from './components/MySpace';
 import { DashboardExecutive } from './components/DashboardExecutive';
 import { AnalysisView } from './components/AnalysisView';
 import { AICreationHub } from './components/AICreationHub';
+import { AIStudio } from './components/AIStudio';
 import { ViewState } from './types';
 import { Activity, Rocket, ArrowRight } from 'lucide-react';
 
@@ -19,6 +20,8 @@ const ToolsPlaceholder = () => (
     </p>
   </div>
 );
+
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 function App() {
   const [currentView, setCurrentView] = useState<ViewState>(ViewState.DASHBOARD);
@@ -35,6 +38,8 @@ function App() {
         return <AnalysisView />;
       case ViewState.AI_CREATION:
         return <AICreationHub setView={setCurrentView} setIsImmersive={setIsImmersive} />;
+      case ViewState.AI_STUDIO:
+        return <AIStudio />;
       case ViewState.TOOLS:
         return <ToolsPlaceholder />;
       default:
@@ -43,9 +48,27 @@ function App() {
   };
 
   return (
-    <Layout currentView={currentView} setView={setCurrentView} isImmersive={isImmersive}>
-      {renderContent()}
-    </Layout>
+    <>
+      <SignedOut>
+        <div className="flex flex-col items-center justify-center h-screen bg-black text-white gap-6">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D1F80C] to-[#a3c20a] flex items-center justify-center shadow-[0_0_30px_rgba(209,248,12,0.3)]">
+            <span className="font-bold text-black text-2xl">ADS</span>
+          </div>
+          <h1 className="text-3xl font-light">Bienvenido a AdEngine</h1>
+          <SignInButton mode="modal">
+            <button className="bg-[#D1F80C] text-black px-8 py-3 rounded-full font-bold hover:bg-[#b5d60a] transition-all shadow-lg hover:shadow-[#D1F80C]/20">
+              Iniciar Sesión
+            </button>
+          </SignInButton>
+        </div>
+      </SignedOut>
+
+      <SignedIn>
+        <Layout currentView={currentView} setView={setCurrentView} isImmersive={isImmersive}>
+          {renderContent()}
+        </Layout>
+      </SignedIn>
+    </>
   );
 }
 
