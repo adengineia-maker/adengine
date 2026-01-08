@@ -1,20 +1,20 @@
 import { GoogleGenAI } from "@google/genai";
 
-
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY ||
   import.meta.env.VITE_API_KEY ||
   import.meta.env.VITE_GOOGLE_API_KEY;
-// Note: In a real production app, ensure this is handled securely. 
-// For this demo, we assume the environment variable is injected.
+
+let ai: any = null;
+
 if (!apiKey) {
-  const errorMsg = "CRITICAL CONFIGURATION ERROR: API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.";
-  console.error(errorMsg);
-  // Fail fast behavior is vital for security
-  throw new Error(errorMsg);
+  console.warn("⚠️ Advertencia: No se encontró API Key de Gemini. Se usarán datos de prueba (Mock Mode).");
+} else {
+  try {
+    ai = new GoogleGenAI({ apiKey });
+  } catch (e) {
+    console.error("Error inicializando Gemini AI:", e);
+  }
 }
-
-const ai = new GoogleGenAI({ apiKey });
-
 
 export const generateAdScript = async (
   productName: string,
@@ -23,7 +23,17 @@ export const generateAdScript = async (
   platform: string,
   strategy: string
 ): Promise<string> => {
-  // API Key presence is guaranteed by module-level check
+  if (!ai) {
+    return `[MOCK] Guion generado para ${productName} (${platform}):
+    
+    1. Hook: ¡No podrás creer esto! (Visual impactante)
+    2. Problema: ¿Cansado de soluciones mediocres?
+    3. Solución: ${productName} llegó para cambiar el juego.
+    4. Beneficios: ${keyBenefits}
+    5. CTA: Cómpralo ahora con descuento.
+    
+    (Este es un resultado de prueba porque no hay API Key configurada)`;
+  }
 
   try {
     const prompt = `
@@ -46,7 +56,7 @@ export const generateAdScript = async (
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-1.5-flash',
       contents: prompt,
     });
 
@@ -58,6 +68,17 @@ export const generateAdScript = async (
 };
 
 export const performResearch = async (context: string): Promise<string> => {
+  if (!ai) {
+    return `[MOCK] Investigación de mercado simulada:
+    
+    1. Pain Points: Frustración con alternativas caras.
+    2. Deseos: Soluciones rápidas y efectivas.
+    3. Voz del Cliente: "Quiero algo que funcione ya".
+    4. Ángulos: Enfocarse en la rapidez.
+    5. Oportunidad: Mercado desatendido en gama media.
+    
+    (Modo de prueba activado)`;
+  }
 
   try {
     const prompt = `
@@ -74,7 +95,7 @@ export const performResearch = async (context: string): Promise<string> => {
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-1.5-flash',
       contents: prompt,
     });
 
@@ -86,6 +107,17 @@ export const performResearch = async (context: string): Promise<string> => {
 };
 
 export const auditLandingPageContent = async (lpContent: string): Promise<string> => {
+  if (!ai) {
+    return `[MOCK] Auditoría Landing Page:
+        
+        Puntuación: 8/10
+        Mejoras:
+        1. Hacer el título más agresivo.
+        2. Añadir testimonios antes del CTA.
+        3. Usar colores de contraste.
+        
+        (Modo de prueba activado)`;
+  }
 
   try {
     const prompt = `
@@ -100,7 +132,7 @@ export const auditLandingPageContent = async (lpContent: string): Promise<string
      `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-1.5-flash',
       contents: prompt,
     });
 
@@ -112,11 +144,13 @@ export const auditLandingPageContent = async (lpContent: string): Promise<string
 }
 
 export const chatWithAgent = async (history: { role: string, content: string }[], newMessage: string): Promise<string> => {
-
+  if (!ai) {
+    return `[MOCK AI]: Entendido, veo que estás interesado en "${newMessage}". Como estoy en modo de prueba (sin API Key), solo puedo decirte que tu idea es genial. ¡Configura la API Key para respuestas reales!`;
+  }
 
   try {
     const chat = ai.chats.create({
-      model: 'gemini-3-pro-preview',
+      model: 'gemini-1.5-flash',
       history: history.map(h => ({
         role: h.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: h.content }]
