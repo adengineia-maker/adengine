@@ -1,9 +1,82 @@
-/* Global styles */
+/* Glob@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark Glass Palette */
+--color-bg-dark: #080808;
+--color-neon: #c6ef4e;
+/* Lime Green Bioluminescence */
+--color-text-primary: #ffffff;
+--color-text-secondary: #94a3b8;
+/* Slate 400 */
+
+/* Glass Variables */
+--glass-border: rgba(255, 255, 255, 0.08);
+--glass-surface: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0.2) 100%);
+--glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Deep Void Gradient (Layer 0) */
+    background: radial-gradient(circle at center, #050505 0%, #000000 100%);
+    background-attachment: fixed;
+    color: var(--color-text-primary);
+}
+
+/* Scrollbar styling for Dark Mode */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(198, 239, 78, 0.3);
+    /* Neon hint */
+}
+
+/* Glass Panel Utility - Visible Dark Crystal (Layer 1) */
+.glass-panel {
+    /* Fondo: Un tinte blanco extremadamente sutil para diferenciarlo del negro puro del fondo */
+    background: linear-gradient(145deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            /* Luz superior */
+            rgba(255, 255, 255, 0.01) 100%
+            /* Sombra inferior */
+        );
+
+    /* Desenfoque: Mantener el efecto premium */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    /* Borde: CRÍTICO para la separación visual */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    /* Sombra: Para elevar el módulo del fondo */
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.6);
+
+    border-radius: 1.5rem;
+    /* 24px */
+}
+
+/* Text Utilities */
+.text-neon {
+    color: var(--color-neon);
+}
+
+.bg-neon-glow {
+    background-color: var(--color-neon);
+    box-shadow: 0 0 15px rgba(198, 239, 78, 0.6);
 }

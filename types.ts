@@ -19,6 +19,7 @@ export enum ViewState {
   MY_SPACE = 'MY_SPACE',
   EXECUTIVE = 'EXECUTIVE',
   AI_CREATION = 'AI_CREATION',
+  SETTINGS = 'SETTINGS',
 }
 
 export interface AdItem {
@@ -46,4 +47,55 @@ export interface AnalysisResult {
   title: string;
   content: string;
   tags?: string[];
+}
+
+// --- Simulator Types ---
+export interface DailyData {
+  day: number;
+  spend: number;
+  revenue: number;
+  impressions: number;
+  clicks: number;
+  conversions: number;
+  roas: number;
+  cumRevenue: number;
+  cumSpend: number;
+}
+
+export interface SimulationTotals {
+  spend: number;
+  revenue: number;
+  roas: number;
+  profit: number;
+  conversions: number;
+  cpa: number;
+}
+
+export interface SimulationLogItem {
+  id: number;
+  day: number;
+  message: string;
+  type: 'success' | 'neutral' | 'warning';
+}
+
+export interface SimulationParams {
+  budget: number;
+  cpm: number;
+  ctr: number;
+  cvr: number;
+  aov: number;
+  duration: number;
+  volatility: number;
+}
+
+export interface SimulationSession {
+  id: string;
+  name: string;
+  date: string;
+  params: SimulationParams;
+  projectedResults: SimulationTotals;
+  actualResults?: {
+    spend: number;
+    revenue: number;
+  };
 }

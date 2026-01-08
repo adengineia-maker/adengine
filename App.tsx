@@ -6,6 +6,7 @@ import { DashboardExecutive } from './components/DashboardExecutive';
 import { AnalysisView } from './components/AnalysisView';
 import { AICreationHub } from './components/AICreationHub';
 import { AIStudio } from './components/AIStudio';
+import { Settings } from './components/Settings';
 import { ViewState } from './types';
 import { Activity, Rocket, ArrowRight } from 'lucide-react';
 
@@ -42,6 +43,8 @@ function App() {
         return <AIStudio />;
       case ViewState.TOOLS:
         return <ToolsPlaceholder />;
+      case ViewState.SETTINGS:
+        return <Settings />;
       default:
         return <DashboardExecutive setView={setCurrentView} />;
     }
@@ -49,6 +52,8 @@ function App() {
 
   return (
     <>
+
+      {/* 
       <SignedOut>
         <div className="flex flex-col items-center justify-center h-screen bg-black text-white gap-6">
           <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D1F80C] to-[#a3c20a] flex items-center justify-center shadow-[0_0_30px_rgba(209,248,12,0.3)]">
@@ -64,10 +69,12 @@ function App() {
       </SignedOut>
 
       <SignedIn>
-        <Layout currentView={currentView} setView={setCurrentView} isImmersive={isImmersive}>
-          {renderContent()}
-        </Layout>
-      </SignedIn>
+      */}
+      <Layout currentView={currentView} setView={setCurrentView} isImmersive={isImmersive}>
+        {renderContent()}
+      </Layout>
+      {/* </SignedIn> */}
+
     </>
   );
 }

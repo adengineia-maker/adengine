@@ -1,10 +1,20 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
+
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY ||
+  import.meta.env.VITE_API_KEY ||
+  import.meta.env.VITE_GOOGLE_API_KEY;
 // Note: In a real production app, ensure this is handled securely. 
 // For this demo, we assume the environment variable is injected.
+if (!apiKey) {
+  const errorMsg = "CRITICAL CONFIGURATION ERROR: API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.";
+  console.error(errorMsg);
+  // Fail fast behavior is vital for security
+  throw new Error(errorMsg);
+}
 
 const ai = new GoogleGenAI({ apiKey });
+
 
 export const generateAdScript = async (
   productName: string,
@@ -13,7 +23,7 @@ export const generateAdScript = async (
   platform: string,
   strategy: string
 ): Promise<string> => {
-  if (!apiKey) return "API Key no encontrada. Por favor verifica tu configuración.";
+  // API Key presence is guaranteed by module-level check
 
   try {
     const prompt = `
@@ -36,7 +46,7 @@ export const generateAdScript = async (
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview',
       contents: prompt,
     });
 
@@ -48,7 +58,6 @@ export const generateAdScript = async (
 };
 
 export const performResearch = async (context: string): Promise<string> => {
-  if (!apiKey) return "API Key no encontrada.";
 
   try {
     const prompt = `
@@ -65,7 +74,7 @@ export const performResearch = async (context: string): Promise<string> => {
     `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview',
       contents: prompt,
     });
 
@@ -77,7 +86,6 @@ export const performResearch = async (context: string): Promise<string> => {
 };
 
 export const auditLandingPageContent = async (lpContent: string): Promise<string> => {
-  if (!apiKey) return "API Key no encontrada.";
 
   try {
     const prompt = `
@@ -92,7 +100,7 @@ export const auditLandingPageContent = async (lpContent: string): Promise<string
      `;
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-pro-preview',
       contents: prompt,
     });
 
@@ -104,19 +112,21 @@ export const auditLandingPageContent = async (lpContent: string): Promise<string
 }
 
 export const chatWithAgent = async (history: { role: string, content: string }[], newMessage: string): Promise<string> => {
-  if (!apiKey) return "API Key no encontrada.";
+
 
   try {
-    const chat = ai.models.startChat({
-      model: 'gemini-2.5-flash',
+    const chat = ai.chats.create({
+      model: 'gemini-3-pro-preview',
       history: history.map(h => ({
         role: h.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: h.content }]
       }))
     });
 
-    const result = await chat.sendMessage(newMessage);
-    return result.response.text();
+    const result = await chat.sendMessage({
+      message: [{ text: newMessage }]
+    });
+    return result.text || "Sin respuesta";
   } catch (error) {
     console.error("Error in chat:", error);
     return "Lo siento, hubo un error al procesar tu mensaje.";

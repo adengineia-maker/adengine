@@ -35,15 +35,15 @@ const CustomXAxisTick = ({ x, y, payload }: any) => {
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#1A1D19] p-4 rounded-lg shadow-xl border border-white/10 text-xs text-white">
+            <div className="bg-[#0a0a0a]/90 backdrop-blur-md p-4 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.5)] border border-white/10 text-xs text-white">
                 <p className="font-bold text-white mb-2">{label}</p>
                 <div className="flex items-center gap-2 mb-1">
-                    <div className="w-2 h-2 rounded-full bg-[#D1F80C]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#c6ef4e] shadow-[0_0_5px_#c6ef4e]"></div>
                     <span className="text-slate-400">Inversión:</span>
                     <span className="font-bold text-white">${payload[0].value.toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-[#0EA5E9]"></div>
+                    <div className="w-2 h-2 rounded-full bg-[#0EA5E9] shadow-[0_0_5px_#0EA5E9]"></div>
                     <span className="text-slate-400">CPA:</span>
                     <span className="font-bold text-white">${payload[1].value.toLocaleString()}</span>
                 </div>
@@ -55,7 +55,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export const TopSpendModule: React.FC = () => {
     return (
-        <div className="w-full bg-[#202020] rounded-2xl p-8 mt-8 shadow-sm border border-white/5">
+        <div className="w-full glass-panel p-8 mt-8">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
                 <div>
@@ -63,7 +63,7 @@ export const TopSpendModule: React.FC = () => {
                     <div className="flex items-center gap-6 border-b border-white/10 w-full md:w-auto">
                         <div className="pb-2 text-sm font-bold text-white relative">
                             Anuncios
-                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#D1F80C]"></div>
+                            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-[#c6ef4e] shadow-[0_0_8px_#c6ef4e]"></div>
                         </div>
                     </div>
                 </div>
@@ -73,11 +73,11 @@ export const TopSpendModule: React.FC = () => {
             <div className="flex items-center gap-6 mb-6 text-xs text-slate-400">
                 <span>Ordenado por Inversión desc</span>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#D1F80C]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#c6ef4e] shadow-[0_0_5px_#c6ef4e]"></div>
                     <span>Inversión</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#0EA5E9]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#0EA5E9] shadow-[0_0_5px_#0EA5E9]"></div>
                     <span>CPA</span>
                 </div>
             </div>
@@ -113,14 +113,14 @@ export const TopSpendModule: React.FC = () => {
                         />
                         <Tooltip
                             content={<CustomTooltip />}
-                            cursor={{ fill: 'rgba(209, 248, 12, 0.05)' }} // Subtle Lime Green highlight
+                            cursor={{ fill: 'rgba(198, 239, 78, 0.05)' }} // Subtle Neon Green highlight
                         />
 
                         {/* Spend Bar (Lime) */}
-                        <Bar yAxisId="left" dataKey="spend" fill="#D1F80C" radius={[4, 4, 0, 0]} barSize={20} />
+                        <Bar yAxisId="left" dataKey="spend" fill="#c6ef4e" radius={[4, 4, 0, 0]} barSize={20} className="drop-shadow-[0_0_4px_rgba(198,239,78,0.3)]" />
 
                         {/* CPA Bar (Teal) */}
-                        <Bar yAxisId="right" dataKey="cpa" fill="#0EA5E9" radius={[4, 4, 0, 0]} barSize={20} />
+                        <Bar yAxisId="right" dataKey="cpa" fill="#0EA5E9" radius={[4, 4, 0, 0]} barSize={20} className="drop-shadow-[0_0_4px_rgba(14,165,233,0.3)]" />
                     </BarChart>
                 </ResponsiveContainer>
             </div>

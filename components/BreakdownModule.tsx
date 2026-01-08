@@ -33,24 +33,24 @@ export const BreakdownModule: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
                 <h3 className="text-2xl font-bold text-white tracking-tight">Breakdowns — Distribución del rendimiento</h3>
 
-                <div className="flex items-center bg-[#1A1D19] rounded-lg p-1 border border-white/10">
+                <div className="flex items-center bg-white/5 backdrop-blur-sm rounded-lg p-1 border border-white/10">
                     <span className="text-xs text-slate-400 px-3 font-medium">Breakdown by</span>
                     <div className="flex items-center gap-1">
                         <button
                             onClick={() => setActiveMetric('spend')}
-                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'spend' ? 'bg-[#D1F80C] text-black' : 'text-slate-400 hover:text-white'}`}
+                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'spend' ? 'bg-[#c6ef4e] text-black shadow-[0_0_10px_rgba(198,239,78,0.3)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                         >
                             Spend
                         </button>
                         <button
                             onClick={() => setActiveMetric('cpa')}
-                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'cpa' ? 'bg-[#D1F80C] text-black' : 'text-slate-400 hover:text-white'}`}
+                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'cpa' ? 'bg-[#c6ef4e] text-black shadow-[0_0_10px_rgba(198,239,78,0.3)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                         >
                             CPA
                         </button>
                         <button
                             onClick={() => setActiveMetric('roas')}
-                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'roas' ? 'bg-[#D1F80C] text-black' : 'text-slate-400 hover:text-white'}`}
+                            className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${activeMetric === 'roas' ? 'bg-[#c6ef4e] text-black shadow-[0_0_10px_rgba(198,239,78,0.3)]' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
                         >
                             ROAS
                         </button>
@@ -62,11 +62,11 @@ export const BreakdownModule: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                 {/* Card 1: Formato */}
-                <div className="bg-[#202020] rounded-2xl p-6 border border-white/5">
+                <div className="glass-panel p-6">
                     <h4 className="text-lg font-bold text-white mb-6">Formato</h4>
                     <div className="space-y-6">
                         {FORMAT_DATA.map((item) => (
-                            <div key={item.name}>
+                            <div key={item.name} className="relative z-10">
                                 <div className="flex justify-between text-sm mb-2">
                                     <span className="text-slate-300 font-medium">{item.name}</span>
                                     <span className="text-white font-bold">${item.value.toLocaleString()}</span>
@@ -83,7 +83,7 @@ export const BreakdownModule: React.FC = () => {
                 </div>
 
                 {/* Card 2: Edad & Género */}
-                <div className="bg-[#202020] rounded-2xl p-6 border border-white/5">
+                <div className="glass-panel p-6">
                     <h4 className="text-lg font-bold text-white mb-6">Edad & Género</h4>
                     <div className="h-[250px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
@@ -102,7 +102,13 @@ export const BreakdownModule: React.FC = () => {
                                     tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1A1D19', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                                    contentStyle={{
+                                        backgroundColor: 'rgba(10, 10, 10, 0.9)',
+                                        backdropFilter: 'blur(8px)',
+                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        borderRadius: '8px',
+                                        boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
+                                    }}
                                     itemStyle={{ fontSize: '12px' }}
                                     labelStyle={{ color: '#fff', fontWeight: 'bold', marginBottom: '4px' }}
                                     cursor={{ fill: 'rgba(255,255,255,0.02)' }}
@@ -121,14 +127,14 @@ export const BreakdownModule: React.FC = () => {
                 </div>
 
                 {/* Card 3: Plataforma */}
-                <div className="bg-[#202020] rounded-2xl p-6 border border-white/5">
+                <div className="glass-panel p-6">
                     <h4 className="text-lg font-bold text-white mb-6">Plataforma</h4>
-                    <div className="space-y-6">
-                        {PLATFORM_DATA.map((item) => (
-                            <div key={item.name} className="flex items-center justify-between group cursor-pointer">
+                    <div className="space-y-0">
+                        {PLATFORM_DATA.map((item, index) => (
+                            <div key={item.name} className={`flex items-center justify-between group cursor-pointer py-4 ${index !== PLATFORM_DATA.length - 1 ? 'border-b border-white/5' : ''}`}>
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-[#1A1D19] flex items-center justify-center border border-white/5 group-hover:border-white/20 transition-colors">
-                                        <item.icon size={20} className="text-slate-400 group-hover:text-white transition-colors" />
+                                    <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#c6ef4e]/30 group-hover:bg-[#c6ef4e]/10 transition-colors">
+                                        <item.icon size={20} className="text-slate-400 group-hover:text-[#c6ef4e] transition-colors" />
                                     </div>
                                     <div>
                                         <div className="text-white font-bold text-sm">{item.name}</div>

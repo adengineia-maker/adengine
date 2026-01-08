@@ -129,7 +129,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             {/* User / Settings (Bottom) */}
             <div className="p-4 mt-auto border-t border-[#2D2E35]">
-                <button className="w-full flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-[#2D2E35] transition-colors text-sm text-[#E3E3E3]">
+                <button
+                    onClick={() => onSelectSession('SETTINGS')}
+                    className="w-full flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-[#2D2E35] transition-colors text-sm text-[#E3E3E3]"
+                >
                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center text-xs font-bold">
                         V
                     </div>

@@ -95,13 +95,17 @@ Links: ${initialData.links}`;
             setIsSending(true);
 
             try {
-                const response = await fetch('https://n8n.srv1155618.hstgr.cloud/webhook/proceso-creativo', {
+                const response = await fetch('https://n8n.srv1155618.hstgr.cloud/webhook/a81daed3-9c56-4cc5-9887-017192a7ca3b/chat', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ chatInput: initialText }),
+                    body: JSON.stringify({
+                        chatInput: initialText,
+                        sessionId: newSessionId,
+                        chatHistory: []
+                    }),
                 });
 
                 if (!response.ok) {
@@ -109,7 +113,7 @@ Links: ${initialData.links}`;
                 }
 
                 const data = await response.json();
-                const botResponse = data.output || data.text || "Recibido. ¿En qué puedo ayudarte específicamente con esto?";
+                const botResponse = data.output || data.text || data.message || "Recibido. ¿En qué puedo ayudarte específicamente con esto?";
 
                 const agentMsg: Message = {
                     id: 'init-agent',
@@ -229,13 +233,23 @@ Links: ${initialData.links}`;
         setIsSending(true);
 
         try {
-            const response = await fetch('https://n8n.srv1155618.hstgr.cloud/webhook/proceso-creativo', {
+            // Contexto del historial para la IA
+            const chatHistory = messages.map(m => ({
+                role: m.role,
+                content: typeof m.content === 'string' ? m.content : "[Contenido visual/complejo]"
+            }));
+
+            const response = await fetch('/webhook-test/ba3eab1b-b947-40fc-b625-2df81e5673bb', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({ chatInput: text }),
+                body: JSON.stringify({
+                    chatInput: text,
+                    sessionId: currentSessionId,
+                    chatHistory: chatHistory
+                }),
             });
 
             if (!response.ok) {
@@ -243,7 +257,7 @@ Links: ${initialData.links}`;
             }
 
             const data = await response.json();
-            const botResponse = data.output || data.text || "Respuesta recibida sin contenido de texto.";
+            const botResponse = data.output || data.text || data.message || "Respuesta recibida sin contenido de texto.";
 
             const agentMsg: Message = {
                 id: (Date.now() + 1).toString(),

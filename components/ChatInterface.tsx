@@ -67,10 +67,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                                 <div
                                     className={`text-base leading-relaxed p-4 rounded-2xl shadow-sm transition-all hover:shadow-md ${msg.role === 'user'
                                         ? 'bg-[#2D2E35] text-[#E3E3E3] rounded-tr-sm'
-                                        : 'bg-transparent text-[#E3E3E3] px-0 py-0' // Agent messages are cleaner, no background bubble usually in Gemini for long text, but let's keep it simple or follow the "bubble" request. 
-                                        // Actually Gemini often has no bubble for AI, just text. But user asked for "burbujas de chat". Let's stick to bubbles for now but make them subtle.
+                                        : 'bg-[#1E1F20] text-[#E3E3E3] rounded-tl-sm'
                                         }`}
-                                    style={msg.role === 'user' ? { backgroundColor: GEMINI_THEME.colors.active } : {}}
+                                    style={msg.role === 'user' ? { backgroundColor: GEMINI_THEME.colors.active } : { backgroundColor: GEMINI_THEME.colors.sidebar }}
                                 >
                                     {msg.content}
                                 </div>
@@ -92,11 +91,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                             </div>
 
                             {/* User Avatar */}
-                            {msg.role === 'user' && (
-                                <div className="w-8 h-8 rounded-full bg-[#282A2C] flex items-center justify-center shrink-0 mt-1">
-                                    <User size={16} className="text-gray-400" />
-                                </div>
-                            )}
+                            {
+                                msg.role === 'user' && (
+                                    <div className="w-8 h-8 rounded-full bg-[#282A2C] flex items-center justify-center shrink-0 mt-1">
+                                        <User size={16} className="text-gray-400" />
+                                    </div>
+                                )
+                            }
                         </div>
                     ))}
 
@@ -171,6 +172,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };

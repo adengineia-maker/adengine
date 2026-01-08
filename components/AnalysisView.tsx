@@ -38,45 +38,57 @@ const AnalysisCard: React.FC<AnalysisCardProps> = ({
 }) => {
     const isPositive = trendType === 'positive';
     const isNegative = trendType === 'negative';
+    const trendColor = isPositive ? '#c6ef4e' : isNegative ? '#EF4444' : '#EAB308';
 
     return (
-        <div className="analysis-card group relative overflow-hidden h-full flex flex-col justify-between">
+        <div className="glass-panel p-6 group relative overflow-hidden h-full flex flex-col justify-between hover:shadow-[0_0_20px_rgba(198,239,78,0.15)] transition-all duration-300">
+            {/* Background Glow */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-[60px] opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none -mr-10 -mt-10"></div>
+
             {/* Header */}
-            <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2 text-slate-400">
+            <div className="flex items-start justify-between mb-4 relative z-10">
+                <div className="flex items-center gap-2 text-slate-400 group-hover:text-slate-200 transition-colors">
                     <span className="text-sm font-medium">{title}</span>
-                    <Info size={14} className="cursor-help hover:text-white transition-colors" />
+                    <Info size={14} className="cursor-help hover:text-white transition-colors opacity-50 hover:opacity-100" />
                 </div>
-                <Crosshair size={16} className="text-slate-600 hover:text-[#D1F80C] transition-colors cursor-pointer" />
+                <Crosshair size={16} className="text-slate-600 hover:text-[#c6ef4e] transition-colors cursor-pointer" />
             </div>
 
             {/* Value & Trend Badge */}
-            <div className="flex items-center gap-3 mb-6">
-                <div className="text-3xl font-bold text-white tracking-tight">
+            <div className="flex items-center gap-3 mb-6 relative z-10">
+                <div className="text-3xl font-bold text-white tracking-tight drop-shadow-[0_0_8px_rgba(0,0,0,0.5)]">
                     {value}
                 </div>
                 <div className={`
-          px-2 py-0.5 rounded-md text-xs font-bold flex items-center gap-1
-          ${isPositive ? 'bg-[#D1F80C]/10 text-[#D1F80C]' : isNegative ? 'bg-red-500/10 text-red-500' : 'bg-yellow-500/10 text-yellow-500'}
+          px-2 py-0.5 rounded-full text-xs font-bold flex items-center gap-1 border
+          ${isPositive ? 'bg-[#c6ef4e]/10 text-[#c6ef4e] border-[#c6ef4e]/20 shadow-[0_0_10px_rgba(198,239,78,0.2)]' : isNegative ? 'bg-red-500/10 text-red-500 border-red-500/20' : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'}
         `}>
                     {trend}
                 </div>
             </div>
 
             {/* Chart */}
-            <div className="h-16 w-full mt-auto">
+            <div className="h-16 w-full mt-auto relative z-10">
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={CHART_DATA}>
                         <Tooltip
-                            contentStyle={{ backgroundColor: '#1A1D19', border: '1px solid #333', borderRadius: '8px', padding: '8px' }}
-                            itemStyle={{ fontSize: '12px' }}
+                            contentStyle={{
+                                backgroundColor: 'rgba(10, 10, 10, 0.9)',
+                                backdropFilter: 'blur(8px)',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: '8px',
+                                padding: '8px',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.5)'
+                            }}
+                            itemStyle={{ fontSize: '12px', color: '#fff' }}
                             labelStyle={{ display: 'none' }}
+                            cursor={{ stroke: 'rgba(255,255,255,0.1)' }}
                         />
                         {/* Previous Period (Dashed) */}
                         <Line
                             type="monotone"
                             dataKey="previous"
-                            stroke="#6B7280"
+                            stroke="#475569"
                             strokeWidth={2}
                             strokeDasharray="4 4"
                             dot={false}
@@ -86,9 +98,10 @@ const AnalysisCard: React.FC<AnalysisCardProps> = ({
                         <Line
                             type="monotone"
                             dataKey="current"
-                            stroke={isPositive ? '#D1F80C' : isNegative ? '#EF4444' : '#EAB308'}
+                            stroke={trendColor}
                             strokeWidth={2}
                             dot={false}
+                            className={isPositive ? "drop-shadow-[0_0_6px_rgba(198,239,78,0.5)]" : ""}
                         />
                     </LineChart>
                 </ResponsiveContainer>
